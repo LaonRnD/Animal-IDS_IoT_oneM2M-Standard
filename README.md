@@ -1,2 +1,2 @@
-# Smart_Farm_Protection_IoT-based-on-oneM2M-standards
+# Animal-IDS_IoT_oneM2M-Standard
 Notification service of animal intrusions to the farm Field
