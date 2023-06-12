@@ -21,8 +21,8 @@
 TasMOTOR tasMotor;
 
 // Wifi
-const char* ssid = "Laon_R&D";//"*********";
-const char* password = "development";//"*********";
+const char* ssid = "*********";
+const char* password = "*********";
 
 uint8_t USE_WIFI = 1;
 WiFiClient espClient; 
