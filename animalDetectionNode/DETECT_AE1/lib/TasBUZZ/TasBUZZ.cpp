@@ -1,6 +1,6 @@
 #include "TasBUZZ.h"
 
-//#define BUZZ_PIN A0
+#define BUZZ_PIN A0
 
 
 TasBUZZ::TasBUZZ(int BUZZ_PIN) {
