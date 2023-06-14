@@ -1,0 +1,32 @@
+{
+  "name": "ids_server",
+  "version": "2.3.0",
+  "dependencies": {
+    "body-parser": "^1.17.0",
+    "connect-flash": "^0.1.1",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "ejs": "^3.1.9",
+    "express": "^4.15.1",
+    "express-fileupload": "^1.4.0",
+    "express-session": "^1.17.3",
+    "fs": "0.0.2",
+    "http": "0.0.0",
+    "moment": "^2.29.4",
+    "morgan": "^1.8.1",
+    "multer": "^1.4.5-lts.1",
+    "mysql": "^2.18.1",
+    "path": "^0.12.7",
+    "request": "^2.88.2",
+    "session-file-store": "^1.5.0",
+    "sessionstorage": "^0.1.0"
+
+  },
+  "description": "animalDetectionServer",
+  "main": "seerver.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Joonho Cha, LAONURI",
+  "license": "BSD-3-Clause"
+}
