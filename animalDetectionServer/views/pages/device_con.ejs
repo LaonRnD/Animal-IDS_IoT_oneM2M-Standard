@@ -1,0 +1,71 @@
+<%- include ('header_') %>
+<%- include ('top_menu') %>
+   
+    <div class="jumbotron">         
+        <h2 class="text-left"><%=title%></h2>
+        <hr />                 
+        <div class="col text-left" style="width: 50%">        
+           
+            <%   var i = 0,j=0,k=0;%>
+            <%aeInfo.forEach(function(v1) {%> 
+            <% k=0 ;%>            
+            <p><strong><%=v1.aeId%></strong></p>			
+                <% var cntInfo = v1.cntInfo; i = k;%>                                                                                                
+                <% for(v2 in cntInfo) {%>
+                
+                    <%if(cntInfo[v2]=="led") {%>
+                        <img src= "<%=img_ledOff%>" id ="<%=v1.aeId%>img<%=i%>" style="width:50px; height:50px;" alt="My Image"> 
+                        <button class="btn btn-danger btn-round" id = "<%=v1.aeId%>btn<%=i%>" name ="<%=v1.aeId%>btn<%=i%>" onclick="WriteCin('<%=v1.aeId%>','<%=cntInfo[v2]%>',1,0)"><%=cntInfo[v2]%> On</button> &nbsp;                            
+                        <!--button class="btn btn-danger btn-round" id="<%=v1.aeId%>btn<%=i%>" onclick="test(this)"><%=cntInfo[v2]%> On</button -->                           
+                        <% i++; %>
+                        <button class="btn btn-danger btn-round" id = "<%=v1.aeId%>btn<%=i%>" name ="<%=v1.aeId%>btn<%=i%>" onclick="WriteCin('<%=v1.aeId%>','<%=cntInfo[v2]%>',0,0)"><%=cntInfo[v2]%> Off</button> &nbsp;
+                        <!--button class="btn btn-danger btn-round" id="<%=v1.aeId%>btn<%=i%>" onclick="test(this)"><%=cntInfo[v2]%> Off</button --> 
+                    <%} else if (cntInfo[v2]=="buzzer") {%>
+                        <img src= "<%=img_soundOff%>"  id ="<%=v1.aeId%>img<%=i%>" style="width:50px; height:50px;" alt="My Image"> 
+                        <button class="btn btn-danger btn-round" id ="<%=v1.aeId%>btn<%=i%>" name ="<%=v1.aeId%>btn<%=i%>" onclick="WriteCin('<%=v1.aeId%>','<%=cntInfo[v2]%>',1,0)"><%=cntInfo[v2]%> On</button> &nbsp;                            
+                        <!--button class="btn btn-danger btn-round" id="<%=v1.aeId%>btn<%=i%>" name ="<%=v1.aeId%>btn<%=i%>" onclick="test(this)"><%=cntInfo[v2]%> On</button -->                           
+                        <% i++; %>
+                        <button class="btn btn-danger btn-round" id ="<%=v1.aeId%>btn<%=i%>" name ="<%=v1.aeId%>btn<%=i%>" onclick="WriteCin('<%=v1.aeId%>','<%=cntInfo[v2]%>',0,0)"><%=cntInfo[v2]%> Off</button> &nbsp;
+                        <!--button class="btn btn-danger btn-round" id="<%=v1.aeId%>btn<%=i%>" onclick="test(this)"><%=cntInfo[v2]%> Off</button -->
+						<hr>						
+                    <%} %>                                        
+
+                    <% j = i++;k=j; %>                                                             
+                
+                
+                <%}%>
+               
+            <%});%>
+			
+        </div>		
+        <div class="col text-left" style="width: 50%"> 
+                
+            <label class="custom-control-label" >[ CAPTURE ]</label><hr/>                                
+            <button class="btn btn-success btn-round" id="btn11" onclick="WriteCin('CAMERA_AE3','cam',1,0)">CAPTURE</button >                     
+            <button class="btn btn-success btn-round" id="btn12" onclick="ReadFile('<%=id%>')">PHOTO VIEW</button >                   
+            <hr/>             
+            <label class="custom-control-label" >[ CAMERA MOTOR ]</label><hr/>                                    
+            <button class="btn btn-success btn-round" id="btn13" onclick="WriteCin('CAMERA_AE3','motor',1,0)">ClockWise</button >               
+            <button class="btn btn-success btn-round" id="btn14" onclick="WriteCin('CAMERA_AE3','motor',2,0)">CounterClockwise</button >
+                                                  
+        </div>
+        <div class="col text-left" style="width: 50%"> 
+            <hr/>
+            <p><strong>GROUP CONTROL</strong></p>                       
+            <label class="custom-control-label" ><strong>[LED GROUP]</strong></label><hr/>                      
+            <img src= "<%=img_ledOff%>" id="pic1" style="width:50px; height:50px;" alt="My Image">                                      
+            <button class="btn btn-success btn-round" id="btn7" onclick="WriteCin('grled','<%=aeInfo[0].cntInfo[0]%>',1,1)">LED On</button >                     
+            <button class="btn btn-success btn-round" id="btn8" onclick="WriteCin('grled','<%=aeInfo[0].cntInfo[0]%>',0,1)">LED Off</button >            
+            <hr/>             
+            <label class="custom-control-label" ><strong>[Buzzer GROUP] </strong></label><hr/>  
+            <img src= "<%=img_soundOff%>" id="pic2" style="width:50px; height:50px;" alt="My Image">                            
+            <button class="btn btn-success btn-round" id="btn9" onclick="WriteCin('grbuzzer','<%=aeInfo[0].cntInfo[1]%>',1,1)">Buzzer On</button >               
+            <button class="btn btn-success btn-round" id="btn10" onclick="WriteCin('grbuzzer','<%=aeInfo[0].cntInfo[1]%>',0,1)">Buzzer Off</button >                            
+        </div>
+            
+        </div>              
+                
+    </div> 
+        	
+
+<%- include ('footer') %>

@@ -1,0 +1,52 @@
+<title><h3>OneM2M</h3></title>
+</head>
+<body>
+  <div class="container col-sm-12" id="mainform">
+    <!-- Static navbar -->
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="/"><h4>Home</h4></a></li>
+			<li class="active"><a href="/in_list"><h4>Photo</h4></a></li>				
+			<li class="active"><a href="/devices/in_temp"><h4>Sensor Monitor</h4></a></li>
+			<!--li class="active"><a href="/devices/cam_control"><h4>Camera Control</h4></a></li -->
+			<li class="active"><a href="/devices/out_control"><h4>Sensor Control</h4></a></li>			
+			<!-- li class="active"><a href="/users/user_info"><h4>User Info</h4></a></li -->			
+			<% if(is_logined == true){ %>				
+				<!--li class="active"><a href="/admin/upload"><h4>Upload</h4></a></li -->					
+			<% } %>				
+          </ul>	  
+	  
+          <ul class="nav navbar-nav navbar-right">		
+
+			<% if(is_logined == false){ %>
+				<li><a href="/users/login"><span class="glyphicon glyphicon-log-in"></span><h4>LogIn</h4></a></li>
+				<li><a href="/register"><span class="glyphicon glyphicon-log-in"></span><h4>Sign Up</h4></a></li>  
+			<% } else { %>
+				<li><a href="/users/logout"><h4 id="user_id">LogOut[<%=id%>]</h4></a></li>
+			<% } %>
+          </ul>		  
+		  <div id="content">
+			&nbsp;&nbsp;&nbsp;&nbsp;
+			<% if(is_logined == false){ %>
+			<img class="active" src="../../images/animal_warning1.png"  style="width:60px; height:60px;border-radius: 50%;" />               
+			<% } else { %>
+				<img class="active" id = "blink_img" src="../../images/animal_warning1.png"  style="width:60px; height:60px;border-radius: 50%;" /> 
+			<% } %>
+		  </div>
+		  <div class="flashes">
+			<% if(flashMessages) {%>			
+				<% if(flashMessages.success){ %>
+					<div class="flash sucess"><%= flashMessages.success %></div>
+					<%} else if(flashMessages.error) {%>
+					<div class="flash error"> <%= flashMessages.error %> </div>
+				<% } %>
+			<% } %>
+		  </div>	  
+        </div><!--/.nav-collapse -->
+			
+      </div><!--/.container-fluid -->
+    </nav>
+	
+	    

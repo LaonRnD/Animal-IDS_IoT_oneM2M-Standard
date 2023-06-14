@@ -1,0 +1,33 @@
+<%- include ('header_') %>
+<%- include ('top_menu') %>	
+
+    <div class="jumbotron">
+        <h2 class="text-left"><%=title%></h2>                
+        <hr />           
+        <div class="row text-left" style="width: 100%"> 
+            <div class="row">                            
+                <p id = "display"><strong>DETECTION_AE1</strong></p>                                                                             
+                <img src= "<%=img_temp%>" id="pic" style="width:80px; height:80px;" alt="My Image">                                 
+                <label class="custom-control-label" ><h3 id = "DETECTION_AE1currTemp0" onclick="test(this)"></h3></label> 
+                &nbsp; &nbsp;              
+                <label class="custom-control-label"><h3 id =  "DETECTION_AE1objTemp0" onclick="test(this)"></h3></label>     
+                &nbsp;&nbsp;&nbsp;&nbsp;                                        
+                <img src= "<%=img_uwb%>" id="pic" style="width:80px; height:80px;" alt="My Image"> 
+                <label class="custom-control-label"><h3 id = "DETECTION_AE1uwb1" onclick="test(this)"></h3></label>
+                &nbsp; &nbsp;
+                <p id = "display"><strong>DETECTION_AE2</strong></p>                                                                             
+                <img src= "<%=img_temp%>" id="pic" style="width:80px; height:80px;" alt="My Image">                                 
+                <label class="custom-control-label" ><h3 id = "DETECTION_AE2currTemp0" onclick="test(this)"></h3></label>
+                &nbsp; &nbsp;               
+                <label class="custom-control-label"><h3 id =  "DETECTION_AE2objTemp0" onclick="test(this)"></h3></label>     
+                &nbsp;&nbsp;&nbsp;&nbsp;                                        
+                <img src= "<%=img_uwb%>" id="pic" style="width:80px; height:80px;" alt="My Image"> 
+                <label class="custom-control-label"><h3 id = "DETECTION_AE2uwb1" onclick="test(this)"></h3></label>                                    
+               
+            </div>                    
+            
+        </div>   
+           
+	</div>	
+
+<%- include ('footer') %>

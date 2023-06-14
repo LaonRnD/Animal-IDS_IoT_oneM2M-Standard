@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Sample Site</title> 
+    <link rel='stylesheet' href='/stylesheets/style.css' />    
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+    <!--link rel='stylesheet' href='/stylesheets/bootstrap.min.css'/--> 
+	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css"/>	
+	<script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>    
+    <!--script src="https://cdnjs.com/libraries/Chart.js"></script-->
+    <!--script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script -->
+	<!--script src="https://code.jquery.com/jquery-3.6.0.slim.js" integrity="sha256-HwWONEZrpuoh951cQD1ov2HUK5zA5DwJ1DNUXaM6FsY=" crossorigin="anonymous"></script -->
+	<style>
+	    table {
+			width: 100%;
+			border: 1px solid #bcbcbc;
+			border-collapse:collapse;
+			margin-left:auto;
+			margin-right:auto;
+		
+		}
+		th,td {
+				border: 1px solid #bcbcbc;
+				padding: 10px;
+				text-align: center;
+		}
+        .auto-style1 {
+            border:1px solid #808080;
+        }
+        .auto-style2 {
+            border:1px solid #008080;
+        }
+	</style>   
+    
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>    
+    <script type="text/javascript"> 
+		var img_temp     = "../../images/warning_on.png";
+		var img_uwb      = "../../images/warning_off.png";
+        var img_ledOn    = "../../images/warning_on.png";
+        var img_ledOff   = "../../images/warning_off.png";
+		var img_soundOn  = "../../images/megaphone_on.png";
+        var img_soundOff = "../../images/megaphone_off.png";
+        var img_warningOn = "../../images/animal_warning.png"
+        var img_warningOff = "../../images/animal_warning1.png"  	
+        var timer = null;
+        var timer1 = null;
+        var timer2 = null;   
+        var noti_flag1 = 0;
+        var amb_temp1 = 0;
+        var obj_temp2 = 0;
+        var diff_temp2 = 0;
+        var noti_flag2 = 0;
+        var amb_temp2 = 0;
+        var obj_tem2 = 0;
+        var cam_state = 0; 
+        var diff_temp2 = 0;
+        var detect_flag = 0; 
+        var start = 0;    
+        const ip_addr = "192.168.1.15";
+        const path = "";
+		const TIME_ZONE = 9 * 60 * 60 * 1000; // 9시간
+		const timeElapsed = Date.now();
+		const today = new Date(timeElapsed + TIME_ZONE);
+		const isoday = today.toISOString();        
+		const tempday = isoday.split('-')[0] + isoday.split('-')[1] + isoday.split('-')[2];
+		const dbday = tempday.split(':')[0] + tempday.split(':')[1] + tempday.split(':')[2].split('.')[0];        
+		console.log(`date:${dbday}`); // '2022-06-09T09:15:50.162Z'   
+      
+        var cntName = [];       
+        //window.onload = function() {
+        $(document).ready(function () {
+        //$(window).ready(function () {
+            
+          
+            var timer1 = 0;timer1 = setInterval("fadeInOut()",2000);
+            //var timer2 = 0;timer2 = setInterval("updateSensor(`AE2FM0`)",3000);
+            var timer2 = 0;timer2 = setInterval("checkNotiFlag()",3000);
+            
+        
+		});    
+       
+
+        function toggleImg(adId,cntName,value) {
+                //console.log('toggle',adId);
+                if((adId =="DETECTION_AE1") & (cntName =="led") & value==1){
+                    document.getElementById('DETECTION_AE1img0').src = img_ledOn;                   
+                } else if((adId =="DETECTION_AE1") & (cntName =="led") & value==0){
+                   document.getElementById('DETECTION_AE1img0').src = img_ledOff;
+                } else if((adId =="DETECTION_AE1") & (cntName =="buzzer") & value==1){
+                    document.getElementById('DETECTION_AE1img2').src = img_soundOn;                                       
+                } else if((adId =="DETECTION_AE1") & (cntName =="buzzer") & value==0){
+                    document.getElementById('DETECTION_AE1img2').src = img_soundOff ;
+                } 
+                //
+                if((adId =="DETECTION_AE2") & (cntName =="led") & value==1){
+                    document.getElementById('DETECTION_AE2img0').src = img_ledOn;                   
+                } else if((adId =="DETECTION_AE2") & (cntName =="led") & value==0){  
+                    document.getElementById('DETECTION_AE2img0').src = img_ledOff;
+                } else if((adId =="DETECTION_AE2") & (cntName =="buzzer") & value==1){
+                    document.getElementById('DETECTION_AE2img2').src = img_soundOn;                    
+                } else if((adId =="DETECTION_AE2") & (cntName =="buzzer") & value==0){                   
+                    document.getElementById('DETECTION_AE2img2').src = img_soundOff ;
+                }
+                //
+                if((adId =="grled") & (value==1)){
+                    document.getElementById('pic1').src = img_ledOn;                    
+                } else if((adId =="grled") & (value==0)) {                   
+                    document.getElementById('pic1').src = img_ledOff;
+                } else if((adId =="grbuzzer") & (value==1)){
+                    document.getElementById('pic2').src = img_soundOn;                   
+                } else if((adId =="grbuzzer") & (value==0)){                    
+                    document.getElementById('pic2').src = img_soundOff ;
+                }
+        };       
+        
+        function updateSensorAll() {
+                   
+            document.querySelector('#DETECTION_AE1currTemp0').innerHTML = `[CurrTemp] ${amb_temp1}`;
+            document.querySelector('#DETECTION_AE1objTemp0').innerHTML = `[ObjTemp] ${obj_temp1}`;
+            document.querySelector('#DETECTION_AE1uwb1').innerHTML = `UWB :${noti_flag1}`;
+            document.querySelector('#DETECTION_AE2currTemp0').innerHTML = `[CurrTemp] ${amb_temp2}`;
+            document.querySelector('#DETECTION_AE2objTemp0').innerHTML = `[ObjTemp] ${obj_temp2}`;
+            document.querySelector('#DETECTION_AE2uwb1').innerHTML = `UWB :${noti_flag2}`;
+		}
+        function test(e) {
+         alert(document.getElementById(e.getAttribute('id')).getAttribute('id'));
+        } 
+        //value : container number           
+        function WriteCin(aeId,cntName,value,mode) {                 
+                var val ="";
+                var user_id="";
+                if(value=="0"){
+                    val = "off";
+                }
+                else if(value=="1"){
+                    if(cntName =="cam"){
+                        val = "cap"; 
+                        user_id = document.querySelector('#user_id').innerHTML;
+                        user_id = user_id.split('[')[1].split(']')[0];                      
+                                           
+                    } 
+                    else if(cntName =="motor") {
+                        val = "1";                       
+                    }
+                    else val= "on";
+                }
+                else if(value=="2"){   
+                    if(cntName =="motor"){                        
+                        val = "2";
+                    } 
+                } 
+                
+                if(cntName == "led") {
+                    var cntNm = "led";
+                }
+                else if(cntName == "buzzer") {
+                    var cntNm = "buzzer";
+                } 
+                else if(cntName == "cam") {
+                    var cntNm = "cam";
+                } 
+                else if(cntName == "motor") {
+                    var cntNm = "motor";
+                } 
+                let url ="";
+                let resourceType ="";                            
+                
+                if(mode==0) {
+                    url = "http://192.168.1.11:7579/Mobius/" + aeId +"/"+ cntNm + "?rcn=0"; //single control
+                    resourceType = 4;
+					console.log(url);
+                }
+                else if(mode==1) {                    
+                    url = "http://192.168.1.11:7579/Mobius/" + "gr" + cntNm +"/" + "fopt"; //group control
+                    resourceType = 4;
+					console.log(url);
+                    
+                    console.log(`application/json;ty= ${resourceType}`)
+                }
+                var representation = {};
+				if(cntName =="cam"){
+					representation = {
+							"m2m:cin":{
+								"con": val+'/'+ ip_addr +'/'+ user_id
+							}
+					}; 
+				} else {
+					representation = {
+								"m2m:cin":{
+									"con": val
+								}
+						}; 				
+				}
+                          
+                var requestId = Math.floor(Math.random() * 10000);
+                fetch(url, {
+                   method: "POST",
+                   headers: {
+                            "Accept": "application/json",
+                            "X-M2M-Origin": aeId,
+                            "X-M2M-RI": requestId,
+                            "Content-Type": "application/json;ty="+resourceType,
+                         },
+                   body: JSON.stringify(representation)
+                   
+                }).then((response) => {
+                     //console.log(response);
+                     toggleImg(aeId,cntName,value);
+                });
+        }
+		 //value : container number           
+        function ReadFile(user) {
+			location.href =  "http://192.168.1.15:3000/in_list/" + user;           
+    
+        }
+        function checkNotiFlag() {
+            $.ajax({
+            url: "http://192.168.1.15:3000/noti_data",
+            type: "get",
+            dataType:'json',
+            success: function(data){                   
+                    const noti = JSON.stringify(data);                    
+                    noti_flag1 = JSON.parse(noti).noti_flag1;                                      
+                    amb_temp1 = JSON.parse(noti).amb1;
+                    obj_temp1 = JSON.parse(noti).obj1;
+                    diff_temp1 = JSON.parse(noti).diff1;
+                    noti_flag2 = JSON.parse(noti).noti_flag2;
+                    amb_temp2 = JSON.parse(noti).amb2;
+                    obj_temp2 = JSON.parse(noti).obj2;
+                    diff_temp2 = JSON.parse(noti).diff2;
+                    cam_state =  JSON.parse(noti).noti_cam;
+                    //detect_flag =  JSON.parse(noti).detect_flag;
+                    console.log(`cam_state :${cam_state}`); 
+                    console.log(`noti_flag :${noti_flag1},${noti_flag2}`); //1 : no detect, 0 : detect
+					if((noti_flag1 == 0)& (noti_flag2 ==0)) detect_flag = 0;
+                              
+                },
+                error: function(err){
+                    console.log(err);    
+                }
+            });
+        }
+        function fadeInOut()
+        {
+            updateSensorAll();			
+            if(detect_flag) {
+			    //console.log(`detect_state2 :${detect_flag}`); 
+                //id가 content의 노드중  첫번째img(img:eq(0))를 showImg에 저장
+                document.getElementById('blink_img').src = img_warningOn;
+                showImg = $("#content img:eq(0)");            
+                showImg.css("opacity","0") 
+                //애니메이션 효과로 1초동안 opacity 값이 1로 변경되면서 나타난다.
+                .animate({opacity:1},1000,function(){
+                //콜백함수 실행, 
+                //처음 보였던 이미지를 dic id="content" 안의 가장 마지막 노드로 이동시킨다.
+                showImg.css("opacity","0.5")      
+                
+                }) 
+            }
+            else document.getElementById('blink_img').src = img_warningOff;
+        }     
+            
+        
+        
+    </script>

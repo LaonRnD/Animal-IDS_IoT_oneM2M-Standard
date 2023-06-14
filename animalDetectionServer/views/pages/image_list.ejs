@@ -1,0 +1,32 @@
+  <%- include ('header_') %>
+  <%- include ('top_menu') %>
+   <!-- Main component for a primary marketing message or call to action -->
+    <div class="jumbotron">
+		<h3>Photo List</h3>
+		<hr />
+		<table>
+			<thead class = "table-dark">
+					<tr class = "table-success">
+					<th scope ="col">View</th>
+					<!--th scope ="col">번호</th -->
+					<th scope ="col">사진 이름</th>					
+					<!--th scope ="col">사진 날짜</th -->			
+								
+					</tr>
+			</thead>
+			<tbody>			
+			<%
+				for(var i=0; i<data.length; i++) {
+				%>
+					<tr class="table-warning">					
+					<td scope="row"><a href="/image_details?file_name=<%=data[i]%>">상세보기</td>			
+					<td><%=data[i]%></td>					
+				</tr>
+			<%
+			};
+			%>
+			</tbody>
+		</table>
+    </div>
+
+	<%- include ('footer') %>
